@@ -274,10 +274,12 @@
     #gallery { padding: 100px 40px; background: var(--beige); }
     .gallery-inner { max-width: 1100px; margin: 0 auto; }
     .gallery-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px; gap: 20px; flex-wrap: wrap; }
+
+    /* ── Updated gallery grid: 4 cols, 3 rows with nice spanning ── */
     .gallery-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      grid-template-rows: auto auto;
+      grid-auto-rows: 200px;
       gap: 16px;
     }
     .g-item {
@@ -288,8 +290,9 @@
     .g-item:hover .g-overlay { opacity: 1; }
     .g-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s; }
     .g-item:hover img { transform: scale(1.06); }
-    .g-item.tall { grid-row: span 2; }
-    .g-item.wide { grid-column: span 2; }
+    /* Spanning helpers */
+    .g-row2 { grid-row: span 2; }   /* tall item — spans 2 rows */
+    .g-col2 { grid-column: span 2; } /* wide item — spans 2 cols */
     .g-overlay { position: absolute; inset: 0; background: rgba(46,80,64,0.45); display: flex; align-items: center; justify-content: center; opacity: 0; transition: 0.3s; }
     .g-overlay .material-icons-round { font-size: 36px; color: white; }
 
@@ -307,12 +310,18 @@
     }
     .ach-stat .num { font-size: 30px; font-weight: 800; color: var(--gold-light); }
     .ach-stat .lab { font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 4px; }
-    .ach-imgs { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+    /* ── Updated achievements mosaic: 3 cols ── */
+    .ach-imgs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: 165px;
+      gap: 12px;
+    }
     .ach-img { border-radius: 16px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.3); }
-    .ach-img img { width: 100%; height: 200px; object-fit: cover; display: block; transition: transform 0.4s; }
+    .ach-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s; }
     .ach-img:hover img { transform: scale(1.05); }
-    .ach-img.tall { grid-row: span 2; }
-    .ach-img.tall img { height: 414px; }
+    .ach-img.row2 { grid-row: span 2; }  /* tall in mosaic */
 
     /* ─── REVIEWS ─── */
     #reviews { padding: 100px 40px; background: var(--beige-light); }
@@ -388,7 +397,7 @@
     .footer-col h4 { font-size: 13px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--gold-light); margin-bottom: 18px; }
     .footer-col a { display: block; font-size: 13px; color: rgba(255,255,255,0.55); margin-bottom: 10px; transition: color 0.2s; cursor: pointer; }
     .footer-col a:hover { color: white; }
-    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: gap; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
     .footer-bottom p { font-size: 12px; color: rgba(255,255,255,0.35); }
 
     /* ─── CHATBOT ─── */
@@ -499,10 +508,11 @@
       .about-inner { grid-template-columns: 1fr; gap: 40px; }
       .about-tag { right: 10px; }
       .services-grid { grid-template-columns: 1fr 1fr; }
-      .gallery-grid { grid-template-columns: 1fr 1fr; }
-      .g-item.tall { grid-row: span 1; }
-      .g-item.wide { grid-column: span 1; }
+      /* Gallery responsive: 2 cols on tablet */
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      .g-col2 { grid-column: span 1; }
       .ach-inner { grid-template-columns: 1fr; gap: 40px; }
+      .ach-imgs { grid-template-columns: repeat(3, 1fr); }
       .reviews-grid { grid-template-columns: 1fr 1fr; }
       .contact-inner { grid-template-columns: 1fr; gap: 40px; }
       .footer-top { grid-template-columns: 1fr 1fr; }
@@ -512,12 +522,15 @@
     }
     @media (max-width: 600px) {
       .services-grid { grid-template-columns: 1fr; }
-      .gallery-grid { grid-template-columns: 1fr 1fr; }
+      /* Gallery: 2 cols on mobile, no spanning */
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 160px; }
+      .g-row2 { grid-row: span 1; }
+      .g-col2 { grid-column: span 1; }
       .reviews-grid { grid-template-columns: 1fr; }
       .footer-top { grid-template-columns: 1fr; }
       .form-2col { grid-template-columns: 1fr; }
-      .ach-imgs { grid-template-columns: 1fr 1fr; }
-      .ach-img.tall img { height: 180px; }
+      .ach-imgs { grid-template-columns: repeat(2, 1fr); }
+      .ach-img.row2 { grid-row: span 1; }
       .hero-float-card { display: none; }
     }
   </style>
@@ -656,11 +669,15 @@
 </div>
 
 <!-- ABOUT -->
+<!--
+  Doctor image updated to new photo:
+  https://i.ibb.co/MDFCZt6P/Whats-App-Image-2026-04-16-at-8-44-08-PM.jpg
+-->
 <section id="about">
   <div class="about-inner">
     <div class="about-img-wrap reveal">
       <div class="about-img">
-        <img src="https://i.ibb.co/Gvxy7cH6/a706ee87425b.jpg" alt="Dr. Parshuram Khatua" />
+        <img src="https://i.ibb.co/MDFCZt6P/Whats-App-Image-2026-04-16-at-8-44-08-PM.jpg" alt="Dr. Parshuram Khatua" />
       </div>
       <div class="about-tag">
         <div class="num">10+</div>
@@ -755,7 +772,12 @@
   </div>
 </section>
 
-<!-- GALLERY -->
+<!-- ═══════════════════════════════════════════════════════════
+     GALLERY  —  10 images in a 4-column masonry-style grid
+     Row 1 : [tall – old1] [new1: 8-31] [new3: 9-05] [new4: 9-07]
+     Row 2 : [tall cont ] [wide – old3 : 1b67] ─── [new5: IMG-5743]
+     Row 3 : [old2: xt5M] [new2: 8-53 ] [old4: gLVg] [old5: rKSF]
+     ═══════════════════════════════════════════════════════════ -->
 <section id="gallery">
   <div class="gallery-inner">
     <div class="gallery-head reveal">
@@ -765,32 +787,81 @@
       </div>
       <p class="section-sub" style="max-width:340px">A glimpse into our healing space and our patients' wellness journeys.</p>
     </div>
+
     <div class="gallery-grid reveal" style="transition-delay:0.1s">
-      <div class="g-item tall" onclick="openLightbox('https://i.ibb.co/Fbv4rP6w/20f461201d1e.jpg')">
-        <img src="https://i.ibb.co/Fbv4rP6w/20f461201d1e.jpg" alt="Clinic Gallery 1" loading="lazy" />
+
+      <!-- ROW 1 col 1 – tall (spans rows 1+2), old image -->
+      <div class="g-item g-row2" onclick="openLightbox('https://i.ibb.co/Fbv4rP6w/20f461201d1e.jpg')">
+        <img src="https://i.ibb.co/Fbv4rP6w/20f461201d1e.jpg" alt="Clinic Gallery" loading="lazy" />
         <div class="g-overlay"><span class="material-icons-round">zoom_in</span></div>
       </div>
+
+      <!-- ROW 1 col 2 – NEW image 1 (8-31) -->
+      <div class="g-item" onclick="openLightbox('https://i.ibb.co/hxwHVLCK/Whats-App-Image-2026-04-16-at-8-31-00-PM.jpg')">
+        <img src="https://i.ibb.co/hxwHVLCK/Whats-App-Image-2026-04-16-at-8-31-00-PM.jpg" alt="Clinic Gallery" loading="lazy" />
+        <div class="g-overlay"><span class="material-icons-round">zoom_in</span></div>
+      </div>
+
+      <!-- ROW 1 col 3 – NEW image 3 (9-05) -->
+      <div class="g-item" onclick="openLightbox('https://i.ibb.co/xq439GPH/Whats-App-Image-2026-04-16-at-9-05-40-PM.jpg')">
+        <img src="https://i.ibb.co/xq439GPH/Whats-App-Image-2026-04-16-at-9-05-40-PM.jpg" alt="Clinic Gallery" loading="lazy" />
+        <div class="g-overlay"><span class="material-icons-round">zoom_in</span></div>
+      </div>
+
+      <!-- ROW 1 col 4 – NEW image 4 (9-07) -->
+      <div class="g-item" onclick="openLightbox('https://i.ibb.co/fVrTV6pM/Whats-App-Image-2026-04-16-at-9-07-22-PM.jpg')">
+        <img src="https://i.ibb.co/fVrTV6pM/Whats-App-Image-2026-04-16-at-9-07-22-PM.jpg" alt="Clinic Gallery" loading="lazy" />
+        <div class="g-overlay"><span class="material-icons-round">zoom_in</span></div>
+      </div>
+
+      <!-- ROW 2 col 2–3 – wide (old3: jPTg), col 1 occupied by tall above -->
+      <div class="g-item g-col2" onclick="openLightbox('https://i.ibb.co/jPTgjvvK/1b67b86b62f5.jpg')">
+        <img src="https://i.ibb.co/jPTgjvvK/1b67b86b62f5.jpg" alt="Clinic Gallery" loading="lazy" />
+        <div class="g-overlay"><span class="material-icons-round">zoom_in</span></div>
+      </div>
+
+      <!-- ROW 2 col 4 – NEW image 5 (IMG-5743) -->
+      <div class="g-item" onclick="openLightbox('https://i.ibb.co/DgQvF898/IMG-5743-JPG.jpg')">
+        <img src="https://i.ibb.co/DgQvF898/IMG-5743-JPG.jpg" alt="Clinic Gallery" loading="lazy" />
+        <div class="g-overlay"><span class="material-icons-round">zoom_in</span></div>
+      </div>
+
+      <!-- ROW 3 col 1 – old image 2 (xt5M) -->
       <div class="g-item" onclick="openLightbox('https://i.ibb.co/xt5M0kqD/c0e8b74415e5.jpg')">
-        <img src="https://i.ibb.co/xt5M0kqD/c0e8b74415e5.jpg" alt="Clinic Gallery 2" loading="lazy" style="height:180px" />
+        <img src="https://i.ibb.co/xt5M0kqD/c0e8b74415e5.jpg" alt="Clinic Gallery" loading="lazy" />
         <div class="g-overlay"><span class="material-icons-round">zoom_in</span></div>
       </div>
-      <div class="g-item wide" onclick="openLightbox('https://i.ibb.co/jPTgjvvK/1b67b86b62f5.jpg')">
-        <img src="https://i.ibb.co/jPTgjvvK/1b67b86b62f5.jpg" alt="Clinic Gallery 3" loading="lazy" style="height:180px" />
+
+      <!-- ROW 3 col 2 – NEW image 2 (8-53) -->
+      <div class="g-item" onclick="openLightbox('https://i.ibb.co/wVcSZP0/Whats-App-Image-2026-04-16-at-8-53-39-PM.jpg')">
+        <img src="https://i.ibb.co/wVcSZP0/Whats-App-Image-2026-04-16-at-8-53-39-PM.jpg" alt="Clinic Gallery" loading="lazy" />
         <div class="g-overlay"><span class="material-icons-round">zoom_in</span></div>
       </div>
+
+      <!-- ROW 3 col 3 – old image 4 (gLVg) -->
       <div class="g-item" onclick="openLightbox('https://i.ibb.co/gLVgBJR6/301f13525d85.jpg')">
-        <img src="https://i.ibb.co/gLVgBJR6/301f13525d85.jpg" alt="Clinic Gallery 4" loading="lazy" style="height:180px" />
+        <img src="https://i.ibb.co/gLVgBJR6/301f13525d85.jpg" alt="Clinic Gallery" loading="lazy" />
         <div class="g-overlay"><span class="material-icons-round">zoom_in</span></div>
       </div>
+
+      <!-- ROW 3 col 4 – old image 5 (rKSF) -->
       <div class="g-item" onclick="openLightbox('https://i.ibb.co/rKSFJTSh/2716d0a617cf.jpg')">
-        <img src="https://i.ibb.co/rKSFJTSh/2716d0a617cf.jpg" alt="Clinic Gallery 5" loading="lazy" style="height:180px" />
+        <img src="https://i.ibb.co/rKSFJTSh/2716d0a617cf.jpg" alt="Clinic Gallery" loading="lazy" />
         <div class="g-overlay"><span class="material-icons-round">zoom_in</span></div>
       </div>
-    </div>
+
+    </div><!-- /gallery-grid -->
   </div>
 </section>
 
-<!-- ACHIEVEMENTS -->
+<!-- ═══════════════════════════════════════════════════════════
+     ACHIEVEMENTS  —  3-column mosaic, 2 rows
+     Col 1 (tall, spans 2 rows) : old hero image (a699)
+     Col 2 row 1 : old (xt5M)       Col 3 row 1 : NEW (8-31)
+     Col 2 row 2 : NEW (8-53)        Col 3 row 2 : NEW (IMG-5743)
+     + second mosaic row below:
+     Col 1 : OLD (gLVg)  Col 2 : NEW (9-05)  Col 3 : NEW (9-07)
+     ═══════════════════════════════════════════════════════════ -->
 <section id="achievements">
   <div class="ach-inner">
     <div class="ach-content reveal">
@@ -820,17 +891,52 @@
         Start Your Healing
       </button>
     </div>
+
+    <!-- 3-col achievements mosaic -->
     <div class="ach-imgs reveal" style="transition-delay:0.2s">
-      <div class="ach-img tall">
-        <img src="https://i.ibb.co/8Ln8G6Ps/a699ac953217.jpg" alt="Achievement" loading="lazy" />
+
+      <!-- Col 1 – tall (spans 2 rows): original hero image -->
+      <div class="ach-img row2">
+        <img src="https://i.ibb.co/8Ln8G6Ps/a699ac953217.jpg" alt="Clinic Achievement" loading="lazy" />
       </div>
+
+      <!-- Col 2 row 1 – old gallery image -->
       <div class="ach-img">
-        <img src="https://i.ibb.co/xt5M0kqD/c0e8b74415e5.jpg" alt="Achievement" loading="lazy" />
+        <img src="https://i.ibb.co/xt5M0kqD/c0e8b74415e5.jpg" alt="Clinic Achievement" loading="lazy" />
       </div>
+
+      <!-- Col 3 row 1 – NEW (8-31) -->
       <div class="ach-img">
-        <img src="https://i.ibb.co/gLVgBJR6/301f13525d85.jpg" alt="Achievement" loading="lazy" />
+        <img src="https://i.ibb.co/hxwHVLCK/Whats-App-Image-2026-04-16-at-8-31-00-PM.jpg" alt="Clinic Achievement" loading="lazy" />
       </div>
-    </div>
+
+      <!-- Col 2 row 2 – NEW (8-53) -->
+      <div class="ach-img">
+        <img src="https://i.ibb.co/wVcSZP0/Whats-App-Image-2026-04-16-at-8-53-39-PM.jpg" alt="Clinic Achievement" loading="lazy" />
+      </div>
+
+      <!-- Col 3 row 2 – NEW (IMG-5743) -->
+      <div class="ach-img">
+        <img src="https://i.ibb.co/DgQvF898/IMG-5743-JPG.jpg" alt="Clinic Achievement" loading="lazy" />
+      </div>
+
+      <!-- Row 3 – 3 more images filling the strip -->
+      <!-- Col 1 row 3 – old (gLVg) -->
+      <div class="ach-img">
+        <img src="https://i.ibb.co/gLVgBJR6/301f13525d85.jpg" alt="Clinic Achievement" loading="lazy" />
+      </div>
+
+      <!-- Col 2 row 3 – NEW (9-05) -->
+      <div class="ach-img">
+        <img src="https://i.ibb.co/xq439GPH/Whats-App-Image-2026-04-16-at-9-05-40-PM.jpg" alt="Clinic Achievement" loading="lazy" />
+      </div>
+
+      <!-- Col 3 row 3 – NEW (9-07) -->
+      <div class="ach-img">
+        <img src="https://i.ibb.co/fVrTV6pM/Whats-App-Image-2026-04-16-at-9-07-22-PM.jpg" alt="Clinic Achievement" loading="lazy" />
+      </div>
+
+    </div><!-- /ach-imgs -->
   </div>
 </section>
 
@@ -1085,13 +1191,9 @@
     const el = document.getElementById(id);
     if (!el) return;
     const isMobile = window.innerWidth <= 960;
-    // On mobile: offset for fixed bottom nav (~80px) + small breathing room
-    // On desktop: offset for fixed top nav (~80px)
     const offset = isMobile ? 20 : 90;
     const top = el.getBoundingClientRect().top + window.pageYOffset - offset;
     window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
-
-    // Update active states
     document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
     document.querySelectorAll('.nav-mobile-item').forEach(a => a.classList.remove('active'));
     const desktopLink = document.querySelector(`.nav-links a[onclick="scrollToSection('${id}')"]`);
@@ -1160,10 +1262,8 @@
 
   // ─── CHATBOT ───
   let chatOpen = false;
-  let chatStep = 0;
   let appointmentData = {};
   let expectingInput = false;
-  let inputField = '';
 
   const botResponses = {
     greeting: {
@@ -1188,7 +1288,6 @@
 
   function addBotMsg(text, options = []) {
     const msgs = document.getElementById('chatMessages');
-    // typing indicator
     const typing = document.createElement('div');
     typing.className = 'msg bot typing';
     typing.innerHTML = '<span></span><span></span><span></span>';
@@ -1270,26 +1369,21 @@
     appointmentData = {};
     aptStep = 1;
     expectingInput = true;
-    inputField = 'name';
     addBotMsg("Great! Let's book your appointment. 📋\n\nFirst, what is your full name?");
   }
 
   function handleInputField(text) {
     if (aptStep === 1) {
-      appointmentData.name = text;
-      aptStep = 2; inputField = 'phone';
-      addBotMsg(`Nice to meet you, ${text}! 👋\n\nWhat's your phone number? (We'll confirm your appointment on this number)`);
+      appointmentData.name = text; aptStep = 2;
+      addBotMsg(`Nice to meet you, ${text}! 👋\n\nWhat's your phone number?`);
     } else if (aptStep === 2) {
-      appointmentData.phone = text;
-      aptStep = 3; inputField = 'address';
+      appointmentData.phone = text; aptStep = 3;
       addBotMsg("Got it! What's your address or locality?");
     } else if (aptStep === 3) {
-      appointmentData.address = text;
-      aptStep = 4; inputField = 'issue';
+      appointmentData.address = text; aptStep = 4;
       addBotMsg("Almost done! 🩺\n\nBriefly describe your health issue or reason for visiting:");
     } else if (aptStep === 4) {
-      appointmentData.issue = text;
-      aptStep = 5; inputField = 'date';
+      appointmentData.issue = text; aptStep = 5;
       addBotMsg("Thank you! What's your preferred appointment date? (e.g. Tomorrow, 15 April, etc.)");
     } else if (aptStep === 5) {
       appointmentData.date = text;
@@ -1300,16 +1394,17 @@
 
   function finishAppointment() {
     const d = appointmentData;
-    addBotMsg(`✅ Appointment Details Confirmed!\n\n👤 Name: ${d.name}\n📞 Phone: ${d.phone}\n📍 Address: ${d.address}\n🩺 Issue: ${d.issue}\n📅 Date: ${d.date}\n\nClick below to confirm via WhatsApp — Dr. Khatua will respond shortly!`, ['📲 Confirm on WhatsApp', 'Back to Menu']);
-    // Auto-prepare WA link
-    document.querySelectorAll('.chat-opt').forEach(btn => {
-      if (btn.textContent.includes('WhatsApp')) {
-        btn.onclick = () => {
-          const msg = `Hello Dr. Khatua! I'd like to book an appointment.\n\n👤 Name: ${d.name}\n📞 Phone: ${d.phone}\n📍 Address: ${d.address}\n🩺 Issue: ${d.issue}\n📅 Date: ${d.date}\n\nKindly confirm. Thank you!`;
-          window.open(`https://wa.me/919337117070?text=${encodeURIComponent(msg)}`, '_blank');
-        };
-      }
-    });
+    addBotMsg(`✅ Appointment Details Confirmed!\n\n👤 Name: ${d.name}\n📞 Phone: ${d.phone}\n📍 Address: ${d.address}\n🩺 Issue: ${d.issue}\n📅 Date: ${d.date}\n\nClick below to confirm via WhatsApp!`, ['📲 Confirm on WhatsApp', 'Back to Menu']);
+    setTimeout(() => {
+      document.querySelectorAll('.chat-opt').forEach(btn => {
+        if (btn.textContent.includes('WhatsApp')) {
+          btn.onclick = () => {
+            const msg = `Hello Dr. Khatua! I'd like to book an appointment.\n\n👤 Name: ${d.name}\n📞 Phone: ${d.phone}\n📍 Address: ${d.address}\n🩺 Issue: ${d.issue}\n📅 Date: ${d.date}\n\nKindly confirm. Thank you!`;
+            window.open(`https://wa.me/919337117070?text=${encodeURIComponent(msg)}`, '_blank');
+          };
+        }
+      });
+    }, 1100);
   }
 
   // Show notification on load
